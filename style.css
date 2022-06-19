@@ -1,0 +1,55 @@
+body {
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.container {
+  height: 100vh;
+  margin: 0 auto;
+  max-width: 500px;
+}
+
+.spawnGameCard {
+  display: flex;
+  flex-direction: column;
+}
+
+.spawnForm input {
+  max-width: 100%;
+  border:1px solid  blueviolet;
+  outline: none;
+  background: transparent;
+}
+
+.spawnForm {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin: 10px 0;
+}
+
+
+.gameCard {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.gameCard div {
+  min-width: 100px;
+  min-height: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: antiquewhite;
+}
+
+.input-error::placeholder {
+  color: red;
+  font-size: 16px;
+}
