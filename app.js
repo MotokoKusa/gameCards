@@ -64,7 +64,7 @@
           cards.style.display = 'none';
           moreBtn(result, arr)
         }
-      }, 5000)
+      }, 60000)
 
     });
     container.append(btn);
@@ -171,7 +171,7 @@
           removeItem.remove()
           cardsArray.length = 0;
         }
-      }, 5000)
+      }, 60000)
 
       form.inpVer.value = null;
       form.inpHor.value = null;
