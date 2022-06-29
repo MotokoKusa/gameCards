@@ -34,52 +34,13 @@
     };
   }
 
-  function moreBtn(result, arr, timer) {
-    const btn = document.createElement('button');
-    const container = document.getElementById('container');
-    const cards = document.getElementById('gameCard');
-    btn.textContent = 'Сыграть еще';
-    btn.style.margin = '10px 0 10px 0'
-    btn.addEventListener('click', () => {
-      const list = document.querySelectorAll('.gameCard > div');
-      const win = document.querySelector('.resultPic');
-      timer = clearTimeout(timer)
-      result.length = 0;
-      cards.style.display = 'flex';
-      list.forEach((el) => {
-        el.textContent = '';
-      });
-      arr.forEach((el) => {
-        el.vision = false;
-      });
-      if (win) {
-        win.remove();
-      }
-      btn.remove();
-
-      timer = setTimeout(() => {
-        if (result.length !== arr.length) {
-          alert('GAME OVER');
-          result.length = 0;
-          cards.style.display = 'none';
-          moreBtn(result, arr)
-        }
-      }, 60000)
-
-    });
-    container.append(btn);
-  }
-
   function createCard(obj, result, arr) {
     const container = document.getElementById('container');
     const card = document.createElement('div');
     const cards = document.getElementById('gameCard');
     const form = document.getElementById('spawnForm');
     const win = document.createElement('img');
-    let timer;
-
-    win.classList.add('resultPic')
-
+    const btn = document.createElement('button');
     card.addEventListener('click', () => {
       if (!obj.vision) {
         obj.vision = !obj.vision;
@@ -87,19 +48,31 @@
         if (result.length === 0 || result.length % 2 === 0 || result[result.length - 1] === obj.num) {
           result.push(obj.num);
         } else {
-          alert('Wrong');
-          setTimeout(() => {
-            obj.vision = !obj.vision;
-            card.textContent = '';
-          }, 1000);
+          alert('GAME OVER');
+          result.length = 0;
+          cards.remove();
         }
       }
 
       if (result.length === arr.length) {
         alert('YOU ARE WIN');
+        result.length = 0;
         form.remove();
-        cards.style.display = 'none';
-        moreBtn(result, arr, timer)
+        btn.textContent = 'Сыграть еще';
+        btn.style.margin = '10px 0 10px 0'
+        btn.addEventListener('click', () => {
+          const list = document.querySelectorAll('.gameCard > div');
+          list.forEach((el) => {
+            el.textContent = '';
+          });
+          arr.forEach((el) => {
+            el.vision = false;
+          });
+
+          win.remove();
+          btn.remove();
+        });
+        container.append(btn);
         win.src = 'https://st.depositphotos.com/1324256/2282/i/450/depositphotos_22829288-stock-photo-winner-silhouette-on-a-mount.jpg';
         container.append(win);
       }
@@ -123,15 +96,12 @@
     const form = createForm();
     const cardsArray = [];
     const resultArray = [];
-    let timer;
     form.spawnForm.addEventListener('submit', (el) => {
       el.preventDefault();
     });
     form.spawnBtn.addEventListener('click', () => {
       cardsArray.length = 0;
       const removeItem = document.getElementById('gameCard');
-
-      clearTimeout(timer)
       if (removeItem) {
         removeItem.remove();
         cardsArray.length = 0;
@@ -158,26 +128,10 @@
       }
 
       createGame(cardsArray, resultArray);
-      form.spawnForm.remove();
-
-      timer = setTimeout(() => {
-        if (resultArray.length !== cardsArray.length) {
-          alert('GAME OVER');
-          resultArray.length = 0;
-          document.getElementById('gameCard').style.display = 'none';
-          moreBtn(resultArray, cardsArray)
-        } else {
-          clearTimeout(timer)
-          removeItem.remove()
-          cardsArray.length = 0;
-        }
-      }, 60000)
-
       form.inpVer.value = null;
       form.inpHor.value = null;
     });
   }
-
 
   spawnGame();
 
